@@ -1,11 +1,20 @@
 import React from 'react';
-
 import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Header from './components/Header';
 
 function App() {
 	return (
 		<div className='app'>
-			<h1>Lets build slack clone</h1>
+			<Router>
+				<>
+					<Switch>
+						<Route path='/' exact>
+							<Header />
+						</Route>
+					</Switch>
+				</>
+			</Router>
 		</div>
 	);
 }
