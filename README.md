@@ -1,3 +1,22 @@
+## About the project
+
+Slack Clone using :
+
+- React ,
+- React-router,
+- Redux ,
+- Styled Components ,
+- Firebase hooks
+
+- Deployed on firebase :
+  https://slack-clone-a6ced.web.app
+
+- Google authentication
+- Chat
+- Possibility to create rooms
+
+- Few more features to come ...
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
