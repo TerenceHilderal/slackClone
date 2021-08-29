@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../Firebase';
 import Message from './Message';
@@ -10,12 +10,13 @@ import { selectRoomId } from '../../features/appSlice';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 
 function Chat() {
+	const chatRef = useRef(null);
 	const roomId = useSelector(selectRoomId);
 	const [roomDetails] = useDocument(
 		roomId && db.collection('rooms').doc(roomId),
 	);
 
-	const [roomMessages] = useCollection(
+	const [roomMessages, loading] = useCollection(
 		roomId &&
 			db
 				.collection('rooms')
@@ -23,6 +24,12 @@ function Chat() {
 				.collection('messages')
 				.orderBy('timestamp', 'asc'),
 	);
+
+	useEffect(() => {
+		chatRef?.current?.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}, [roomId, loading]);
 
 	return (
 		<ChatContainer>
@@ -41,6 +48,7 @@ function Chat() {
 						</p>
 					</HeaderRight>
 				</Header>
+
 				<ChatMessages>
 					{roomMessages?.docs.map((doc) => {
 						const { message, timestamp, user, userImage } = doc.data();
@@ -54,11 +62,15 @@ function Chat() {
 							/>
 						);
 					})}
+					<ChatBottom ref={chatRef} />
 				</ChatMessages>
 
-				<ChatInput channelName={roomDetails?.data().name} channelId={roomId}>
+				<ChatInput
+					chatRef={chatRef}
+					channelName={roomDetails?.data().name}
+					channelId={roomId}
+				>
 					{' '}
-					blabla
 				</ChatInput>
 			</>
 		</ChatContainer>
@@ -66,6 +78,10 @@ function Chat() {
 }
 
 export default Chat;
+
+const ChatBottom = styled.div`
+	padding-bottom: 200px;
+`;
 
 const ChatMessages = styled.div``;
 

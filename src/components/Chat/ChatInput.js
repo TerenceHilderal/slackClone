@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { db } from '../../Firebase';
 import firebase from 'firebase';
 
-function ChatInput({ channelName, channelId }) {
+function ChatInput({ channelName, channelId, chatRef }) {
 	// const inputRef = useRef(null); one way to do it
 
 	const [input, setInput] = useState('');
@@ -20,8 +20,13 @@ function ChatInput({ channelName, channelId }) {
 			message: input,
 			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 			user: 'Master',
-			userImage: 'blabla',
+			userImage: 'http://hilderal.terence.free.fr/Images/informaticien.jpg',
 		});
+
+		chatRef.current.scrollIntoView({
+			behavior: 'smooth',
+		});
+
 		setInput('');
 	};
 
